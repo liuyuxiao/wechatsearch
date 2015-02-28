@@ -192,11 +192,10 @@
                             html+='<h3>'+data.resultarray[i].title+'<strong class="text-success sp-fs">&nbsp;&nbsp;&nbsp;阅读数'+data.resultarray[i].read_num+'</strong></h3><p>'+data.resultarray[i].content168+'</p><a content="read-more" href="'+data.resultarray[i].url+'">阅读全文</a>'
                         }
 
-
+                        con.html(html);
 
                     });
 
-                    con.html(html);
                     $(this).bootpag({total: data.totalpages, maxVisible: 10});
                 });
 
