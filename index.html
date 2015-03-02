@@ -38,6 +38,7 @@
         </div>
         <button type="submit" class="btn btn-default" id="submit">发送请求</button>
     </form>
+    <p style="padding-top: 6px">（参数值说明：旧的参数值不能请求到文章时，请联系刘雨骁获取新的参数值）</p>
     <table class="table table-bordered content">
     </table>
     <p id="pagination-here"></p>
@@ -171,7 +172,7 @@
 
             $.post('http://121.40.138.85:5000/name',{'name':name,'key':key,'page':page},function(data){
                 var con=$('.content');
-                var html='<tr><td>日期</td><td>阅读量</td><td>七天平均阅读量对比</td><td>标题</td></tr>';
+                var html='<tr><td>日期</td><td>阅读量</td><td>10天平均阅读量对比</td><td>标题</td></tr>';
                 for(var i= 0,len=data.resultarray.length;i<len;i++){
                     readingSum+=data.resultarray[i].read_num;
                 }
@@ -200,7 +201,7 @@
 
                     $.post('http://121.40.138.85:5000/name',{'name':name,'key':key,'page':page},function(data){
                         var con=$('.content');
-                        var html='<tr><td>日期</td><td>阅读量</td><td>七天平均阅读量对比</td><td>标题</td></tr>';
+                        var html='<tr><td>日期</td><td>阅读量</td><td>10天平均阅读量对比</td><td>标题</td></tr>';
                         for(var i= 0,len=data.resultarray.length;i<len;i++){
                             readingSum+=data.resultarray[i].read_num;
                         }
