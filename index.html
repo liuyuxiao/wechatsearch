@@ -178,7 +178,11 @@
                 readingAverage=readingSum/data.resultarray.length;
                 for(var i= 0,len=data.resultarray.length;i<len;i++){
                     var thisRatioTemp=data.resultarray[i].read_num/readingAverage;
-                    var thisRatio=thisRatioTemp.toFixed(2).slice(2,4)+"%";
+                    if(thisRatioTemp.toFixed(2).slice(2,3)==0){
+                        var thisRatio=thisRatioTemp.toFixed(2).slice(3,4)+"%";
+                    }else{
+                        var thisRatio=thisRatioTemp.toFixed(2).slice(2,4)+"%";
+                    }
                     html+='<tr><td>'+data.resultarray[i].date+'</td><td>'+data.resultarray[i].read_num+'</td><td>'+thisRatio+'</td><td><a target="_blank" href="'+data.resultarray[i].url+'">'+data.resultarray[i].title+'</a></td></tr>'
 
                 }
