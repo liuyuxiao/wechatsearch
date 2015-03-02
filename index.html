@@ -14,17 +14,20 @@
     nav{
         display: none;
         }
+    table{
+        margin-top: 10px;
+    }
     </style>
 </head>
 <body>
 <div class="container">
     <form class="form-inline">
         <div class="form-group">
-            <label for="name">Name</label>
+            <label for="name">微信号名称</label>
             <input type="text" class="form-control" id="name" value="蓝橡树">
         </div>
         <div class="form-group">
-            <label for="key">key</label>
+            <label for="key">参数</label>
             <input type="text" class="form-control" id="key"
                    value="8ea74966bf01cfb6b72ca27595d3ce311e1b6f3156d8462fac2f5655fcb8cbe9b388cc8aad6eaa72dd6cfff3729b57c7
 ">
@@ -33,13 +36,10 @@
             <label for="page">page</label>
             <input type="text" class="form-control" id="page" value="1">
         </div>
-        <button type="submit" class="btn btn-default" id="submit">Send invitation</button>
+        <button type="submit" class="btn btn-default" id="submit">发送请求</button>
     </form>
-    <div class="row">
-        <div class="col-md-9"><div class="content">
-
-        </div></div>
-    </div>
+    <table class="table table-bordered content">
+    </table>
     <p id="pagination-here"></p>
 </div>
 <script src="jquery-1.11.1.min.js"></script>
@@ -166,12 +166,21 @@
             var name=$('#name').val();
             var key=$('#key').val();
             var page=$('#page').val();
+            var readingSum=0;
+            var readingAverage=0;
 
             $.post('http://121.40.138.85:5000/name',{'name':name,'key':key,'page':page},function(data){
                 var con=$('.content');
-                var html='';
+                var html='<tr><td>日期</td><td>阅读量</td><td>七天平均阅读量对比</td><td>标题</td></tr>';
                 for(var i= 0,len=data.resultarray.length;i<len;i++){
-                    html+='<h3>'+data.resultarray[i].title+'<strong class="text-success sp-fs">&nbsp;&nbsp;&nbsp;阅读数'+data.resultarray[i].read_num+'</strong></h3><p>'+data.resultarray[i].content168+'</p><a content="read-more" href="'+data.resultarray[i].url+'">阅读全文</a>'
+                    readingSum+=data.resultarray[i].read_num;
+                }
+                readingAverage=readingSum/data.resultarray.length;
+                for(var i= 0,len=data.resultarray.length;i<len;i++){
+                    var thisRatioTemp=data.resultarray[i].read_num/readingAverage;
+                    var thisRatio=thisRatioTemp.toFixed(2).slice(2,4)+"%";
+                    html+='<tr><td>'+data.resultarray[i].date+'</td><td>'+data.resultarray[i].read_num+'</td><td>'+thisRatio+'</td><td><a target="_blank" href="'+data.resultarray[i].url+'">'+data.resultarray[i].title+'</a></td></tr>'
+
                 }
                 con.html(html);
                 $('#pagination-here').bootpag({
@@ -187,9 +196,16 @@
 
                     $.post('http://121.40.138.85:5000/name',{'name':name,'key':key,'page':page},function(data){
                         var con=$('.content');
-                        var html='';
+                        var html='<tr><td>日期</td><td>阅读量</td><td>七天平均阅读量对比</td><td>标题</td></tr>';
                         for(var i= 0,len=data.resultarray.length;i<len;i++){
-                            html+='<h3>'+data.resultarray[i].title+'<strong class="text-success sp-fs">&nbsp;&nbsp;&nbsp;阅读数'+data.resultarray[i].read_num+'</strong></h3><p>'+data.resultarray[i].content168+'</p><a content="read-more" href="'+data.resultarray[i].url+'">阅读全文</a>'
+                            readingSum+=data.resultarray[i].read_num;
+                        }
+                        readingAverage=readingSum/data.resultarray.length;
+
+                        for(var i= 0,len=data.resultarray.length;i<len;i++){
+                            var thisRatioTemp=data.resultarray[i].read_num/readingAverage;
+                            var thisRatio=thisRatioTemp.toFixed(2).slice(2,4)+"%";
+                            html+='<tr><td>'+data.resultarray[i].date+'</td><td>'+data.resultarray[i].read_num+'</td><td>'+thisRatio+'</td><td><a target="_blank" href="'+data.resultarray[i].url+'">'+data.resultarray[i].title+'</a></td></tr>'
                         }
 
                         con.html(html);
