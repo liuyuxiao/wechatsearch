@@ -199,7 +199,7 @@
                     var key=$('#key').val();
                     var page=$('#page').val();
 
-                    $.post('http://121.40.138.85:5000/name',{'openid':name,'key':key,'page':page},function(data){
+                    $.post('http://121.40.138.85:5000/openid',{'openid':name,'key':key,'page':page},function(data){
                         var con=$('.content');
                         var html='<tr><td>日期</td><td>阅读量</td><td>10天平均阅读量对比</td><td>标题</td></tr>';
                         for(var i= 0,len=data.resultarray.length;i<len;i++){
